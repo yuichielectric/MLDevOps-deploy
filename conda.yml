@@ -1,0 +1,19 @@
+name: MLDevOpsCICD
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - scikit-learn
+  - pandas
+  - numpy
+  - pytest
+  - jupyter
+  - jupyterlab
+  - fastapi=0.63.0
+  - uvicorn
+  - gunicorn
+  - pip
+  - dvc
+  - pip:
+    - httpx
