@@ -1,7 +1,9 @@
+import pandas as pd
+
 from sklearn.metrics import fbeta_score, precision_score, recall_score
+from sklearn.linear_model import LogisticRegression
 
 
-# Optional: implement hyperparameter tuning.
 def train_model(X_train, y_train):
     """
     Trains a machine learning model and returns it.
@@ -17,8 +19,7 @@ def train_model(X_train, y_train):
     model
         Trained machine learning model.
     """
-
-    pass
+    return LogisticRegression().fit(X_train, y_train)
 
 
 def compute_model_metrics(y, preds):
@@ -48,7 +49,7 @@ def inference(model, X):
 
     Inputs
     ------
-    model : ???
+    model : sklearn.linear_model.LogisticRegression
         Trained machine learning model.
     X : np.array
         Data used for prediction.
@@ -57,4 +58,17 @@ def inference(model, X):
     preds : np.array
         Predictions from the model.
     """
-    pass
+    return model.predict(X)
+
+
+def save_model(model, path):
+    """ Saves the model to a file.
+
+    Inputs
+    ------
+    model : sklearn.linear_model.LogisticRegression
+        Trained machine learning model.
+    path : str
+        Path to save the model.
+    """
+    pd.to_pickle(model, path)

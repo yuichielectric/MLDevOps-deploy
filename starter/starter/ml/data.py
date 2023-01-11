@@ -1,9 +1,28 @@
 import numpy as np
-from sklearn.preprocessing import LabelBinarizer, OneHotEncoder
+import pandas as pd
+from sklearn.preprocessing import LabelBinarizer, OneHotEncoder, StandardScaler, LabelEncoder
+
+
+def load_csv(file):
+    """ Load data from file.
+
+    Inputs
+    ------
+    file : str
+        Path to the file containing the data.
+
+    Returns
+    -------
+    df : pd.DataFrame
+        Dataframe containing the data.
+    """
+    df = pd.read_csv(file)
+    return df
 
 
 def process_data(
-    X, categorical_features=[], label=None, training=True, encoder=None, lb=None
+    X, categorical_features=[], label=None, training=True, encoder=None, lb=None,
+    columns_missing_values=[]
 ):
     """ Process the data used in the machine learning pipeline.
 
@@ -29,6 +48,8 @@ def process_data(
         Trained sklearn OneHotEncoder, only used if training=False.
     lb : sklearn.preprocessing._label.LabelBinarizer
         Trained sklearn LabelBinarizer, only used if training=False.
+    columns_missing_values : list[str]
+        List containing the names of the columns with missing values (default=[]])
 
     Returns
     -------
@@ -44,6 +65,12 @@ def process_data(
         passed in.
     """
 
+    if columns_missing_values:
+        # Filling the missing data
+        X[X == '?'] = np.nan
+        for col in columns_missing_values:
+            X[col].fillna(X[col].mode()[0], inplace=True)
+
     if label is not None:
         y = X[label]
         X = X.drop([label], axis=1)
@@ -52,6 +79,9 @@ def process_data(
 
     X_categorical = X[categorical_features].values
     X_continuous = X.drop(*[categorical_features], axis=1)
+
+    scaler = StandardScaler()
+    X_continuous = pd.DataFrame(scaler.fit_transform(X_continuous), columns=X_continuous.columns)
 
     if training is True:
         encoder = OneHotEncoder(sparse=False, handle_unknown="ignore")
