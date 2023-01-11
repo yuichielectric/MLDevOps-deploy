@@ -1,3 +1,5 @@
+[![Python application](https://github.com/yuichielectric/MLDevOps-deploy/actions/workflows/python-app.yml/badge.svg)](https://github.com/yuichielectric/MLDevOps-deploy/actions/workflows/python-app.yml)
+
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
 # Environment Set up
