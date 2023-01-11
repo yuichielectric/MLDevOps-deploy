@@ -9,7 +9,8 @@ from ml.model import train_model, compute_model_metrics, inference, save_model
 import os
 
 # Add code to load in the data.
-csv_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "census_cleaned.csv")
+dirname = os.path.dirname(os.path.abspath(__file__))
+csv_file_path = os.path.join(dirname, "..", "data", "census_cleaned.csv")
 data = load_csv(csv_file_path)
 
 # Optional enhancement, use K-fold cross validation instead of a train-test split.
@@ -50,7 +51,19 @@ print("Precision: {:.2f}".format(precision))
 print("Recall: {:.2f}".format(recall))
 print("Fbeta: {:.2f}".format(fbeta))
 
-model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "model", "model.pkl")
-encoder_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "model", "encoder.pkl")
+model_path = os.path.join(dirname, "..", "model", "model.pkl")
+encoder_path = os.path.join(dirname, "..", "model", "encoder.pkl")
 save_model(model, model_path)
 save_model(encoder, encoder_path)
+
+# Compute the slice performance metrics for education column.
+with open(os.path.join(dirname, "education_slice_performance.txt"), "w") as f:
+    f.write("# Slice performance metrics for education column" + os.linesep + os.linesep)
+    for slice in data["education"].unique():
+        X_slice, y_slice, _, _ = process_data(
+            data[data["education"] == slice], categorical_features=cat_features,    label="salary", training=False, encoder=encoder, lb=lb
+        )
+        precision, recall, fbeta = compute_model_metrics(y_slice, inference(model, X_slice))
+
+        f.write('Slice {:13s}: precision: {:.2f}, recall: {:.2f}, Fbeta: {:.2f}'.format(slice, precision, recall, fbeta))
+        f.write(os.linesep)
