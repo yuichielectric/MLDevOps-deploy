@@ -72,3 +72,18 @@ def save_model(model, path):
         Path to save the model.
     """
     pd.to_pickle(model, path)
+
+
+def load_model(path):
+    """ Loads the model from a file.
+
+    Inputs
+    ------
+    path : str
+        Path to load the model from.
+    Returns
+    -------
+    model
+        Trained machine learning model.
+    """
+    return pd.read_pickle(path)
