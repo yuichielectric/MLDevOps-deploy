@@ -44,7 +44,7 @@ save_model(encoder, encoder_path)
 save_model(lb, lb_path)
 
 # Compute the slice performance metrics for education column.
-with open(os.path.join(dirname, "education_slice_performance.txt"), "w") as f:
+with open(os.path.join(dirname, "slice_output.txt"), "w") as f:
     f.write("# Slice performance metrics for education column" + os.linesep + os.linesep)
     for slice in data["education"].unique():
         X_slice, y_slice, _, _ = process_data(
