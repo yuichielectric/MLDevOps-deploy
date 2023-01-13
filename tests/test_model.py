@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from lib.ml.model import train_model, compute_model_metrics, inference
+from src.ml.model import train_model, compute_model_metrics, inference
 from sklearn.linear_model import LogisticRegression
 
 

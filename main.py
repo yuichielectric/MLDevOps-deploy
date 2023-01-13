@@ -1,12 +1,12 @@
 from fastapi import FastAPI
 from request_model import Input
-from lib.constants import CATEGORICAL_FEATURES, COLUMNS_MISSING_VALUES
+from src.constants import CATEGORICAL_FEATURES, COLUMNS_MISSING_VALUES
 
 import os
 import pandas as pd
 
-from lib.ml.model import inference, load_model
-from lib.ml.data import process_data
+from src.ml.model import inference, load_model
+from src.ml.data import process_data
 
 
 if "DYNO" in os.environ and os.path.isdir(".dvc"):
