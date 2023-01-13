@@ -22,15 +22,15 @@ The training data used to train this model is the census data from the UCI Machi
 
 ## Evaluation Data
 
-The dataset used to evaluate the model is the same as the training data.
+The test data used in the evaluation was a 20% split of the original census data. The rest of the 80% was used to train the model.
 
 ## Metrics
 
 The model is evaluated using the following metrics:
 
- - Precision
- - Recall
- - F-beta Score
+ - Precision: 0.71
+ - Recall: 0.62
+ - F-beta Score: 0.66
 
 ## Ethical Considerations
 
