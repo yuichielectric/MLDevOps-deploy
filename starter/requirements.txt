@@ -8,3 +8,5 @@ uvicorn
 gunicorn
 httpx
 pydantic
+dvc
+dvc-s3
